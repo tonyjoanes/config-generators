@@ -26,6 +26,10 @@
 .PARAMETER FailOnMissing
     If specified, script will fail if any required values are missing. Default is true.
 
+.PARAMETER SkipSecrets
+    If specified, only apply configuration values and skip secrets. Useful when secrets
+    are managed separately by a different team.
+
 .EXAMPLE
     ./Apply-ConfigValues.ps1 `
         -MetadataFile "./configuration-metadata.json" `
@@ -40,6 +44,15 @@
         -AppConfigName "appconfig-myapp-dev" `
         -KeyVaultName "kv-myapp-dev" `
         -ValidateOnly
+
+.EXAMPLE
+    # Apply config values only, skip secrets
+    ./Apply-ConfigValues.ps1 `
+        -MetadataFile "./configuration-metadata.json" `
+        -AppConfigName "appconfig-myapp-dev" `
+        -KeyVaultName "kv-myapp-dev" `
+        -ParameterFile "./parameters.dev.json" `
+        -SkipSecrets
 
 .NOTES
     Secrets should be provided via environment variables, not in parameter files.
@@ -65,7 +78,10 @@ param(
     [switch]$ValidateOnly,
 
     [Parameter(Mandatory = $false)]
-    [bool]$FailOnMissing = $true
+    [bool]$FailOnMissing = $true,
+
+    [Parameter(Mandatory = $false)]
+    [switch]$SkipSecrets
 )
 
 $ErrorActionPreference = "Stop"
@@ -186,8 +202,13 @@ foreach ($entry in $metadata.configEntries) {
 Write-ColorOutput "`n🔐 Processing Secret Entries" $ColorInfo
 Write-ColorOutput "=============================" $ColorInfo
 
-# Process secret entries (Key Vault)
-foreach ($entry in $metadata.secretEntries) {
+# Skip secrets if requested
+if ($SkipSecrets) {
+    Write-ColorOutput "  ⊘ Skipped (SkipSecrets flag set)" $ColorWarning
+    Write-ColorOutput "    Secrets must be managed separately" $ColorWarning
+} else {
+    # Process secret entries (Key Vault)
+    foreach ($entry in $metadata.secretEntries) {
     $key = $entry.key
     $secretName = $key.Replace(':', '-')
     $required = $entry.required
@@ -225,6 +246,7 @@ foreach ($entry in $metadata.secretEntries) {
     else {
         Write-ColorOutput "  ⊘ $secretName (optional, not provided)" $ColorWarning
         $skippedCount++
+    }
     }
 }
 
