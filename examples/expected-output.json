@@ -1,0 +1,136 @@
+{
+  "configEntries": [
+    {
+      "key": "Database:Host",
+      "type": "config",
+      "valueType": "string",
+      "description": "The database server hostname",
+      "sectionDescription": "Database connection settings",
+      "required": true
+    },
+    {
+      "key": "Database:Port",
+      "type": "config",
+      "valueType": "int",
+      "defaultValue": "5432",
+      "description": "The database server port",
+      "sectionDescription": "Database connection settings",
+      "required": false
+    },
+    {
+      "key": "Database:DatabaseName",
+      "type": "config",
+      "valueType": "string",
+      "description": "The database name",
+      "sectionDescription": "Database connection settings",
+      "required": true
+    },
+    {
+      "key": "Database:Username",
+      "type": "config",
+      "valueType": "string",
+      "description": "The database username",
+      "sectionDescription": "Database connection settings",
+      "required": true
+    },
+    {
+      "key": "Database:TimeoutSeconds",
+      "type": "config",
+      "valueType": "int",
+      "defaultValue": "30",
+      "description": "Connection timeout in seconds",
+      "sectionDescription": "Database connection settings",
+      "required": false
+    },
+    {
+      "key": "Azure:StorageAccountName",
+      "type": "config",
+      "valueType": "string",
+      "description": "Azure storage account name",
+      "sectionDescription": "Azure service configuration",
+      "required": true
+    },
+    {
+      "key": "Azure:ContainerName",
+      "type": "config",
+      "valueType": "string",
+      "defaultValue": "uploads",
+      "description": "Azure blob container name",
+      "sectionDescription": "Azure service configuration",
+      "required": false
+    },
+    {
+      "key": "Azure:EnableApplicationInsights",
+      "type": "config",
+      "valueType": "bool",
+      "defaultValue": "true",
+      "description": "Enable Azure Application Insights",
+      "sectionDescription": "Azure service configuration",
+      "required": false
+    },
+    {
+      "key": "ExternalApi:BaseUrl",
+      "type": "config",
+      "valueType": "string",
+      "description": "External API base URL",
+      "required": true
+    },
+    {
+      "key": "ExternalApi:TimeoutSeconds",
+      "type": "config",
+      "valueType": "int",
+      "defaultValue": "60",
+      "description": "Request timeout in seconds",
+      "required": false
+    },
+    {
+      "key": "ExternalApi:MaxRetries",
+      "type": "config",
+      "valueType": "int",
+      "defaultValue": "3",
+      "description": "Number of retry attempts",
+      "required": false
+    }
+  ],
+  "secretEntries": [
+    {
+      "key": "Database:Password",
+      "type": "secret",
+      "valueType": "string",
+      "description": "The database password",
+      "sectionDescription": "Database connection settings",
+      "required": true
+    },
+    {
+      "key": "Database:SslCertificate",
+      "type": "secret",
+      "valueType": "string",
+      "description": "SSL certificate for database connection",
+      "sectionDescription": "Database connection settings",
+      "required": false
+    },
+    {
+      "key": "Azure:StorageAccountKey",
+      "type": "secret",
+      "valueType": "string",
+      "description": "Azure storage account key",
+      "sectionDescription": "Azure service configuration",
+      "required": true
+    },
+    {
+      "key": "Azure:ApplicationInsightsKey",
+      "type": "secret",
+      "valueType": "string",
+      "description": "Application Insights instrumentation key",
+      "sectionDescription": "Azure service configuration",
+      "required": false
+    },
+    {
+      "key": "ExternalApi:ApiKey",
+      "type": "secret",
+      "valueType": "string",
+      "description": "API authentication key",
+      "required": true
+    }
+  ]
+}
