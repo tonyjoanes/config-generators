@@ -1,0 +1,23 @@
+{
+  "$schema": "./parameters.schema.json",
+  "description": "Development environment configuration values (non-secrets only)",
+  "values": {
+    "Database:Host": "dev-db.postgres.database.azure.com",
+    "Database:Port": "5432",
+    "Database:DatabaseName": "myapp_dev",
+    "Database:Username": "devuser",
+    "Database:TimeoutSeconds": "30",
+    "Azure:StorageAccountName": "stmyappdev001",
+    "Azure:ContainerName": "uploads",
+    "Azure:EnableApplicationInsights": "true",
+    "ExternalApi:BaseUrl": "https://api-dev.example.com",
+    "ExternalApi:TimeoutSeconds": "60",
+    "ExternalApi:MaxRetries": "3"
+  },
+  "secretsNote": "Secrets must be provided via environment variables or Azure DevOps variable groups",
+  "requiredSecrets": [
+    "Database-Password",
+    "Azure-StorageAccountKey",
+    "ExternalApi-ApiKey"
+  ]
+}
